@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <link rel="stylesheet" href="Velvet.css">
+    <style>
+        /* SIZE BUTTONS */
+        .size-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #8a7a68;
+            margin-bottom: 6px;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .size-group {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e8e4de;
+            background: #fff;
+            color: #1a1410;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0;
+            margin: 0;
+            border-radius: 0;
+            letter-spacing: 1px;
+        }
+
+        .size-btn:hover {
+            border-color: #6d4e15;
+            color: #6d4e15;
+            background: #fff;
+        }
+
+        .size-btn.selected {
+            background: #1a1410;
+            color: #fff;
+            border-color: #1a1410;
+        }
+
+        /* SIZE ERROR */
+        .size-error {
+            font-size: 11px;
+            color: #c0392b;
+            margin-bottom: 6px;
+            display: none;
+            letter-spacing: 0.5px;
+        }
+
+        /* SUCCESS POPUP DARK BACKGROUND */
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 20, 16, 0.65);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        /* WHITE POPUP BOX */
+        .success-popup {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+            animation: popupSlide 0.3s ease;
+        }
+
+        @keyframes popupSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* GREEN TICK CIRCLE */
+        .popup-tick {
+            width: 64px;
+            height: 64px;
+            background: #f0fdf4;
+            border: 2px solid #4ade80;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 26px;
+            color: #16a34a;
+        }
+
+        .success-popup h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 300;
+            color: #1a1410;
+            margin-bottom: 8px;
+        }
+
+        .popup-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #6d4e15;
+            margin-bottom: 4px;
+        }
+
+        .popup-detail {
+            font-size: 13px;
+            color: #8a7a68;
+            margin-bottom: 28px;
+        }
+
+        /* POPUP BUTTONS */
+        .popup-btn-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .popup-go-cart {
+            flex: 1;
+            padding: 13px;
+            background: #6d4e15;
+            color: #fff;
+            border: none;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .popup-go-cart:hover {
+            background: #1a1410;
+        }
+
+        .popup-continue {
+            flex: 1;
+            padding: 13px;
+            background: transparent;
+            color: #1a1410;
+            border: 1px solid #e8e4de;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .popup-continue:hover {
+            border-color: #6d4e15;
+            color: #6d4e15;
+            background: transparent;
+        }
+
+        /* X CLOSE BUTTON */
+        .popup-x {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #8a7a68;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px;
+        }
+
+        .popup-x:hover {
+            color: #1a1410;
+            background: none;
+            border: none;
+        }
+
+        /* SHAKE ANIMATION for size error */
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-6px);
+            }
+
+            40% {
+                transform: translateX(6px);
+            }
+
+            60% {
+                transform: translateX(-4px);
+            }
+
+            80% {
+                transform: translateX(4px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toast" id="toast"></div>
+    <script src="cart.js"></script>
+    <div class="banner">
+        <div class="navbar">
+            <div class="logo">
+                <span class="logo-text">Velvet Vogue</span>
+            </div>
+            <ul>
+                <li><a href="Velvet.html">Home</a></li>
+                <li><a href="Shop.html">Shop</a></li>
+                <li><a href="Sign.php">Sign Up</a></li>
+                <li><a href="Cart.html" class="active">Product Card</a></li>
+                <li><a href="Customer_Support.html">Customer Support</a></li>
+                <li><a href="Ourstory.html">Our Story</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ONE card-container wraps ALL cards -->
+    <div class="card-container">
+
+        <!-- PRODUCT 1 -->
+        <div class="card" data-category="tshirt">
+            <img src="Tshirt 1.jpg" alt="White Comfort TEE">
+            <div class="card-content">
+                <h2>White Comfort TEE</h2>
+                <p>Price: Rs. 2,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-1">
+                    <button class="size-btn" onclick="pickSize(1,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(1,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(1,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(1,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-1">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(1,'White Comfort TEE',2999,'Tshirt 1.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 2 -->
+        <div class="card" data-category="tshirt">
+            <img src="Tshirt 2.jpg" alt="Fabric White Trendy TEE">
+            <div class="card-content">
+                <h2>Fabric White Trendy TEE</h2>
+                <p>Price: Rs. 3,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-2">
+                    <button class="size-btn" onclick="pickSize(2,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(2,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(2,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(2,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-2">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(2,'Fabric White Trendy TEE',3999,'Tshirt 2.jpg')">Buy
+                    Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 3 -->
+        <div class="card" data-category="tshirt">
+            <img src="Tshirt 6.jpg" alt="Comfort Trendy TEE">
+            <div class="card-content">
+                <h2>Comfort Trendy TEE</h2>
+                <p>Price: Rs. 4,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-3">
+                    <button class="size-btn" onclick="pickSize(3,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(3,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(3,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(3,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-3">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(3,'Comfort Trendy TEE',4999,'Tshirt 6.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 4 -->
+        <div class="card" data-category="tshirt">
+            <img src="Tshirt 7.jpg" alt="Comfort Trendy TEE">
+            <div class="card-content">
+                <h2>Comfort Trendy TEE</h2>
+                <p>Price: Rs. 4,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-4">
+                    <button class="size-btn" onclick="pickSize(4,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(4,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(4,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(4,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-4">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(4,'Comfort Trendy TEE',4999,'Tshirt 7.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 5 -->
+        <div class="card" data-category="tshirt">
+            <img src="Tshirt 8.jpg" alt="Comfort Trendy TEE">
+            <div class="card-content">
+                <h2>Comfort Trendy TEE</h2>
+                <p>Price: Rs. 4,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-5">
+                    <button class="size-btn" onclick="pickSize(5,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(5,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(5,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(5,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-5">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(5,'Comfort Trendy TEE',4999,'Tshirt 8.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 6 -->
+        <div class="card" data-category="tshirt">
+            <img src="out fit 3.jpg" alt="Comfort Trendy Tee">
+            <div class="card-content">
+                <h2>Comfort Trendy Tee</h2>
+                <p>Price: Rs. 4,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-6">
+                    <button class="size-btn" onclick="pickSize(6,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(6,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(6,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(6,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-6">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(6,'Comfort Trendy Tee',4999,'out fit 3.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 7 -->
+        <div class="card" data-category="tshirt">
+            <img src="out fit 4.jpg" alt="Trendy Tee">
+            <div class="card-content">
+                <h2>Trendy Tee</h2>
+                <p>Price: Rs. 5,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-7">
+                    <button class="size-btn" onclick="pickSize(7,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(7,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(7,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(7,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-7">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(7,'Trendy Tee',5999,'out fit 4.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 8 -->
+        <div class="card" data-category="tshirt">
+            <img src="out fit 5.jpg" alt="Trendy Tee">
+            <div class="card-content">
+                <h2>Trendy Tee</h2>
+                <p>Price: Rs. 5,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-8">
+                    <button class="size-btn" onclick="pickSize(8,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(8,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(8,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(8,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-8">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(8,'Trendy Tee',5999,'out fit 5.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 9 -->
+        <div class="card" data-category="shirt">
+            <img src="Shirt 3.jpg" alt="Trendy Shirt">
+            <div class="card-content">
+                <h2>Trendy Shirt</h2>
+                <p>Price: Rs. 5,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-9">
+                    <button class="size-btn" onclick="pickSize(9,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(9,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(9,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(9,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-9">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(9,'Trendy Shirt',5999,'Shirt 3.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 10 -->
+        <div class="card" data-category="shirt">
+            <img src="Shirt 4.jpg" alt="Trendy Shirt">
+            <div class="card-content">
+                <h2>Trendy Shirt</h2>
+                <p>Price: Rs. 5,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-10">
+                    <button class="size-btn" onclick="pickSize(10,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(10,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(10,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(10,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-10">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(10,'Trendy Shirt',5999,'Shirt 4.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 11 -->
+        <div class="card" data-category="shirt">
+            <img src="Shirt 5.jpg" alt="Trendy Shirt">
+            <div class="card-content">
+                <h2>Trendy Shirt</h2>
+                <p>Price: Rs. 5,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-11">
+                    <button class="size-btn" onclick="pickSize(11,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(11,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(11,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(11,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-11">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(11,'Trendy Shirt',5999,'Shirt 5.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 12 -->
+        <div class="card" data-category="shirt">
+            <img src="Shirt 6.jpg" alt="Trendy Shirt">
+            <div class="card-content">
+                <h2>Trendy Shirt</h2>
+                <p>Price: Rs. 5,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-12">
+                    <button class="size-btn" onclick="pickSize(12,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(12,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(12,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(12,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-12">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(12,'Trendy Shirt',5999,'Shirt 6.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 13 -->
+        <div class="card" data-category="shirt">
+            <img src="Dress 12.jpg" alt="White Chinese Shirt">
+            <div class="card-content">
+                <h2>White Chinese Shirt</h2>
+                <p>Price: Rs. 2,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-13">
+                    <button class="size-btn" onclick="pickSize(13,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(13,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(13,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(13,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-13">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(13,'White Chinese Shirt',2999,'Dress 12.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 14 -->
+        <div class="card" data-category="shirt">
+            <img src="Dress 13.jpg" alt="Chinese Color Shirt">
+            <div class="card-content">
+                <h2>Chinese Color Shirt</h2>
+                <p>Price: Rs. 2,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-14">
+                    <button class="size-btn" onclick="pickSize(14,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(14,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(14,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(14,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-14">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(14,'Chinese Color Shirt',2999,'Dress 13.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 15 -->
+        <div class="card" data-category="shirt">
+            <img src="Dress 14.jpg" alt="Comfort Chinese Shirt">
+            <div class="card-content">
+                <h2>Comfort Chinese Shirt</h2>
+                <p>Price: Rs. 2,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-15">
+                    <button class="size-btn" onclick="pickSize(15,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(15,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(15,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(15,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-15">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(15,'Comfort Chinese Shirt',2999,'Dress 14.jpg')">Buy
+                    Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 16 -->
+        <div class="card" data-category="shirt">
+            <img src="Dress 15.jpg" alt="Trendy Chinese Shirt">
+            <div class="card-content">
+                <h2>Trendy Chinese Shirt</h2>
+                <p>Price: Rs. 2,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-16">
+                    <button class="size-btn" onclick="pickSize(16,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(16,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(16,'L',this)">L</button>
+                    <button class="size-btn" onclick="pickSize(16,'XL',this)">XL</button>
+                </div>
+                <p class="size-error" id="error-16">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(16,'Trendy Chinese Shirt',2999,'Dress 15.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 17 -->
+        <div class="card" data-category="dress">
+            <img src="Dress 9.jpg" alt="Wedding Fit Women">
+            <div class="card-content">
+                <h2>Wedding Fit Women</h2>
+                <p>Price: Rs. 6,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-17">
+                    <button class="size-btn" onclick="pickSize(17,'XS',this)">XS</button>
+                    <button class="size-btn" onclick="pickSize(17,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(17,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(17,'L',this)">L</button>
+                </div>
+                <p class="size-error" id="error-17">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(17,'Wedding Fit Women',6999,'Dress 9.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 18 -->
+        <div class="card" data-category="dress">
+            <img src="women 1.jpg" alt="Fit Women">
+            <div class="card-content">
+                <h2>Fit Women</h2>
+                <p>Price: Rs. 6,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-18">
+                    <button class="size-btn" onclick="pickSize(18,'XS',this)">XS</button>
+                    <button class="size-btn" onclick="pickSize(18,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(18,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(18,'L',this)">L</button>
+                </div>
+                <p class="size-error" id="error-18">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(18,'Fit Women',6999,'women 1.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 19 -->
+        <div class="card" data-category="dress">
+            <img src="women 2.jpg" alt="Fit Women">
+            <div class="card-content">
+                <h2>Fit Women</h2>
+                <p>Price: Rs. 6,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-19">
+                    <button class="size-btn" onclick="pickSize(19,'XS',this)">XS</button>
+                    <button class="size-btn" onclick="pickSize(19,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(19,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(19,'L',this)">L</button>
+                </div>
+                <p class="size-error" id="error-19">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(19,'Fit Women',6999,'women 2.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 20 -->
+        <div class="card" data-category="dress">
+            <img src="Dress 10.jpg" alt="Wedding Trendy Fit">
+            <div class="card-content">
+                <h2>Wedding Trendy Fit</h2>
+                <p>Price: Rs. 7,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-20">
+                    <button class="size-btn" onclick="pickSize(20,'XS',this)">XS</button>
+                    <button class="size-btn" onclick="pickSize(20,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(20,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(20,'L',this)">L</button>
+                </div>
+                <p class="size-error" id="error-20">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(20,'Wedding Trendy Fit',7999,'Dress 10.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 21 -->
+        <div class="card" data-category="dress">
+            <img src="Dress 11.jpg" alt="Wedding Trendy Fit">
+            <div class="card-content">
+                <h2>Wedding Trendy Fit</h2>
+                <p>Price: Rs. 6,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-21">
+                    <button class="size-btn" onclick="pickSize(21,'XS',this)">XS</button>
+                    <button class="size-btn" onclick="pickSize(21,'S',this)">S</button>
+                    <button class="size-btn" onclick="pickSize(21,'M',this)">M</button>
+                    <button class="size-btn" onclick="pickSize(21,'L',this)">L</button>
+                </div>
+                <p class="size-error" id="error-21">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(21,'Wedding Trendy Fit',6999,'Dress 11.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 22 -->
+        <div class="card" data-category="kids">
+            <img src="kids 1.jpg" alt="Kids Clothy">
+            <div class="card-content">
+                <h2>Kids Clothy</h2>
+                <p>Price: Rs. 3,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-22">
+                    <button class="size-btn" onclick="pickSize(22,'3-4Y',this)">3-4Y</button>
+                    <button class="size-btn" onclick="pickSize(22,'5-6Y',this)">5-6Y</button>
+                    <button class="size-btn" onclick="pickSize(22,'7-8Y',this)">7-8Y</button>
+                </div>
+                <p class="size-error" id="error-22">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(22,'Kids Clothy',3999,'kids 1.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 23 -->
+        <div class="card" data-category="kids">
+            <img src="kids 2.jpg" alt="Kids Clothy">
+            <div class="card-content">
+                <h2>Kids Clothy</h2>
+                <p>Price: Rs. 6,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-23">
+                    <button class="size-btn" onclick="pickSize(23,'3-4Y',this)">3-4Y</button>
+                    <button class="size-btn" onclick="pickSize(23,'5-6Y',this)">5-6Y</button>
+                    <button class="size-btn" onclick="pickSize(23,'7-8Y',this)">7-8Y</button>
+                </div>
+                <p class="size-error" id="error-23">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(23,'Kids Clothy',6999,'kids 2.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- PRODUCT 24 -->
+        <div class="card" data-category="kids">
+            <img src="kids 3.jpg" alt="Kids Clothy">
+            <div class="card-content">
+                <h2>Kids Clothy</h2>
+                <p>Price: Rs. 4,999.00</p>
+                <span class="size-label">Select Size</span>
+                <div class="size-group" id="sizes-24">
+                    <button class="size-btn" onclick="pickSize(24,'3-4Y',this)">3-4Y</button>
+                    <button class="size-btn" onclick="pickSize(24,'5-6Y',this)">5-6Y</button>
+                    <button class="size-btn" onclick="pickSize(24,'7-8Y',this)">7-8Y</button>
+                </div>
+                <p class="size-error" id="error-24">&#9888; Please select a size</p>
+                <button class="buy-btn" onclick="buyNow(24,'Kids Clothy',4999,'kids 3.jpg')">Buy Now</button>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <!-- ═══════════════════════════════
+         SUCCESS POPUP
+         This is the green tick popup
+         that appears after Buy Now
+    ════════════════════════════════ -->
+    <div class="success-overlay" id="success-overlay" onclick="closePopupOutside(event)">
+        <div class="success-popup" id="success-popup">
+
+            <!-- X button top right corner -->
+            <button class="popup-x" onclick="closePopup()">&#10005;</button>
+
+            <!-- Green tick circle -->
+            <div class="popup-tick">&#10003;</div>
+
+            <!-- Title -->
+            <h2>Added to Cart!</h2>
+
+            <!-- Product name — filled by JavaScript -->
+            <p class="popup-name" id="popup-name">Product Name</p>
+
+            <!-- Size and price — filled by JavaScript -->
+            <p class="popup-detail" id="popup-detail">Size: M | Rs. 0</p>
+
+            <!-- Two buttons -->
+            <div class="popup-btn-row">
+                <a href="Cart.html" class="popup-go-cart">View Cart</a>
+                <button class="popup-continue" onclick="closePopup()">Continue Shopping</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         TOAST NOTIFICATION
+    ════════════════════════════════ -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ═══════════════════════════════
+         LOAD CART.JS
+         Must be AFTER the toast div
+    ════════════════════════════════ -->
+    <script src="cart.js"></script>
+
+    <!-- ═══════════════════════════════
+         JAVASCRIPT FOR THIS PAGE
+         Size selection + Buy Now popup
+    ════════════════════════════════ -->
+    <script>
+
+        // This object remembers which size
+        // the user selected for each product
+        // Example: { 1: 'M', 5: 'L', 9: 'XL' }
+        var selectedSizes = {};
+
+
+        // ── pickSize() ───────────────────────
+        // Called when user clicks S / M / L / XL
+        // productId = the product number (1, 2, 3...)
+        // size      = the size clicked ('S','M','L','XL')
+        // btn       = the button that was clicked
+
+        function pickSize(productId, size, btn) {
+
+            // Step 1: Save selected size for this product
+            selectedSizes[productId] = size;
+
+            // Step 2: Hide the red error message
+            var err = document.getElementById('error-' + productId);
+            if (err) {
+                err.style.display = 'none';
+            }
+
+            // Step 3: Remove black highlight from ALL
+            // size buttons for this product
+            var group = document.getElementById('sizes-' + productId);
+            var allBtns = group.querySelectorAll('.size-btn');
+            for (var i = 0; i < allBtns.length; i++) {
+                allBtns[i].classList.remove('selected');
+            }
+
+            // Step 4: Add black highlight to
+            // the button the user just clicked
+            btn.classList.add('selected');
+        }
+
+
+        // ── buyNow() ─────────────────────────
+        // Called when user clicks the Buy Now button
+        // id    = product ID number
+        // name  = product name
+        // price = price number (e.g. 2999)
+        // image = image filename
+
+        function buyNow(id, name, price, image) {
+
+            // Step 1: Check if user selected a size
+            var size = selectedSizes[id];
+
+            if (!size) {
+                // NO SIZE SELECTED
+                // Show the red error message
+                var err = document.getElementById('error-' + id);
+                if (err) {
+                    err.style.display = 'block';
+                }
+
+                // Make size buttons shake to draw attention
+                var group = document.getElementById('sizes-' + id);
+                if (group) {
+                    group.style.animation = 'none';
+                    group.offsetHeight; // this line forces the shake to restart
+                    group.style.animation = 'shake 0.4s ease';
+                }
+
+                // Stop here — do NOT add to cart
+                return;
+            }
+
+            // SIZE IS SELECTED — continue
+
+            // Step 2: Add product to cart
+            // Include size in the name
+            // Example: 'White Comfort TEE (M)'
+            var nameWithSize = name + ' (' + size + ')';
+            addToCart(id, nameWithSize, price, image);
+
+            // Step 3: Put product info into the popup
+            document.getElementById('popup-name').textContent = name;
+            document.getElementById('popup-detail').textContent =
+                'Size: ' + size + '   |   Rs. ' + price.toLocaleString();
+
+            // Step 4: Show the success popup
+            document.getElementById('success-overlay').classList.add('show');
+        }
+
+
+        // ── closePopup() ─────────────────────
+        // Closes the popup
+        // Called by the X button and
+        // Continue Shopping button
+
+        function closePopup() {
+            document.getElementById('success-overlay').classList.remove('show');
+        }
+
+
+        // ── closePopupOutside() ──────────────
+        // Closes popup when user clicks
+        // the dark background area
+
+        function closePopupOutside(event) {
+            // Only close if they clicked the
+            // dark background, not the white box
+            if (event.target === document.getElementById('success-overlay')) {
+                closePopup();
+            }
+        }
+
+
+        // ── Escape key closes popup ──────────
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closePopup();
+            }
+        });
+
+
+        // ── Mobile menu ──────────────────────
+        var mobileBtn = document.getElementById('nav-mobile');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', function () {
+                document.querySelector('.nav-links').classList.toggle('open');
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
+</body>
+
+</html>
