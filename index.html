@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hasidh Nihmathullah — Software Developer</title>
+    <title>Hasidh Nihmathullah — Junior Software Developer</title>
+    <link rel="icon" type="image/jpeg" href="Favi icon.jpeg">
     <link rel="stylesheet" href="style.css" />
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
@@ -28,7 +29,7 @@
     <!-- LOADER -->
     <div id="loader">
         <div class="loader-content">
-            <div class="loader-logo">Aash<span>.dev</span></div>
+            <div class="loader-logo">Hasidh<span> Nihmathullah</span></div>
             <div class="loader-bar-wrap">
                 <div class="loader-bar" id="loaderBar"></div>
             </div>
@@ -37,19 +38,13 @@
     </div>
 
     <!-- BG VIDEO -->
-    <div class="bg-video-wrap">
-        <video autoplay loop muted playsinline>
-            <source src="animation-video.mp4" type="video/mp4" />
-        </video>
-        <div class="bg-overlay"></div>
-    </div>
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
-
+    <!-- Main Background Video -->
+    <video autoplay loop muted playsinline id="hero-bg-video">
+        <source src="bg-video.mp4.mp4" video/mp4">
+    </video>
     <!-- NAV -->
     <nav id="navbar">
-        <a href="#hero" class="nav-logo">Aash<span>.dev</span></a>
+        <a href="#hero" class="nav-logo">Hasidh <span>Nihmathullah</span></a>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -58,7 +53,7 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="nav-right">
-            <a href="Hasidh Nihmathullah CV.jpeg" download class="nav-cv">⬇ CV</a>
+            <a href="Hasidh Nihmathullah CV.jpg" download class="nav-cv">⬇ CV</a>
             <a href="https://wa.me/94767901679?text=Hi%20Hasidh!%20I%20want%20to%20hire%20you." target="_blank"
                 class="nav-wa">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -77,7 +72,7 @@
         <a href="#experience" onclick="closeMobile()">Education</a>
         <a href="#projects" onclick="closeMobile()">Projects</a>
         <a href="#contact" onclick="closeMobile()">Contact</a>
-        <a href="Hasidh_CV.pdf" download>⬇ Download CV</a>
+        <a href="Hasidh Nihmathullah CV.png" download>⬇ Download CV</a>
         <a href="https://wa.me/94767901679" target="_blank" class="mobile-wa">💬 WhatsApp Me</a>
     </div>
 
@@ -110,7 +105,7 @@
                     LinkedIn
                 </a>
                 <a href="https://fiverr.com/aashidh" target="_blank" class="social-btn">🛒 Fiverr</a>
-                <a href="https://github.com/aashdev" target="_blank" class="social-btn">
+                <a href="https://github.com/hasidhnihmathullah" target="_blank" class="social-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
@@ -119,9 +114,9 @@
                 </a>
             </div>
             <div class="hero-stats">
-                <div class="stat"><span class="snum" data-count="6">0</span><span class="snum-sfx">+</span><span
+                <div class="stat"><span class="snum" data-count="20">0</span><span class="snum-sfx">+</span><span
                         class="slabel">Projects</span></div>
-                <div class="stat"><span class="snum" data-count="8">0</span><span class="snum-sfx">+</span><span
+                <div class="stat"><span class="snum" data-count="5">0</span><span class="snum-sfx">+</span><span
                         class="slabel">Languages</span></div>
                 <div class="stat"><span class="snum" data-count="20">0</span><span class="slabel">Years old</span></div>
                 <div class="stat"><span class="snum" data-count="100">0</span><span class="snum-sfx">%</span><span
@@ -135,10 +130,10 @@
                 <div class="profile-placeholder" id="pp"><span>📷</span><small>Add photo</small></div>
                 <div class="profile-glow"></div>
                 <div class="profile-badge">HND Software Dev</div>
-                <div class="float-pill fp1">Python 🐍</div>
-                <div class="float-pill fp2">PHP 🐘</div>
-                <div class="float-pill fp3">Java ☕</div>
-                <div class="float-pill fp4">Figma 🎨</div>
+                <div class="float-pill fp1">Python </div>
+                <div class="float-pill fp2">PHP </div>
+                <div class="float-pill fp3">Java </div>
+                <div class="float-pill fp4">Figma </div>
             </div>
         </div>
         <div class="scroll-hint">
@@ -160,8 +155,8 @@
                 <p>I speak <strong>English, Tamil and Sinhala</strong>, making me great with clients worldwide. Clean
                     code, fast delivery and client-first is my approach to every project.</p>
                 <div class="about-actions">
-                    <a href="Hasidh Nihmathullah CV.jpeg" download class="btn-primary">⬇ Download CV</a>
-                    <a href="https://wa.me/94767901679?text=Hi%20Hasidh!" target="_blank" class="btn-wa">💬 WhatsApp</a>
+                    <a href="Hasidh Nihmathullah CV.jpg" download class="btn-primary">⬇ Download CV</a>
+                    <a href="https://wa.me/94767901679?text=Hi%20Hasidh!" target="_blank" class="btn-wa"> WhatsApp</a>
                 </div>
             </div>
             <div class="about-right reveal delay-1">
@@ -374,8 +369,8 @@
                 </div>
                 <h3 class="tl-heading" style="margin-top:2rem"><span>❤️</span> Interests</h3>
                 <div class="interests-grid">
-                    <div class="int-item">💻 Software Development</div>
-                    <div class="int-item">🌐 Web Development</div>
+                    <div class="int-item">Software Development</div>
+                    <div class="int-item">Web Development</div>
                     <div class="int-item">🎨 Graphic Designing</div>
                     <div class="int-item">📚 New Technologies</div>
                 </div>
@@ -390,7 +385,7 @@
                 </div>
             </div>
             <div style="display:flex;gap:1rem;flex-wrap:wrap">
-                <a href="Hasidh Nihmathullah CV.jpeg" download class="btn-primary">⬇ Download CV</a>
+                <a href="Hasidh Nihmathullah CV.jpg" download class="btn-primary">⬇ Download CV</a>
                 <a href="https://wa.me/94767901679?text=Hi%20Hasidh!%20I%20reviewed%20your%20CV%20and%20want%20to%20discuss%20an%20opportunity."
                     target="_blank" class="btn-wa">💬 WhatsApp Me</a>
             </div>
@@ -429,7 +424,8 @@
                             High Road, Chennai, India</span></div>
                     <div class="proj-links">
                         <a href="projects/dopamine/index.html" target="_blank" class="proj-link">View Live →</a>
-                        <a href="https://github.com/aashdev" target="_blank" class="proj-link-ghost">GitHub ↗</a>
+                        <a href="https://github.com/hasidhnihmathullah" target="_blank" class="proj-link-ghost">GitHub
+                            ↗</a>
                     </div>
                 </div>
             </div>
@@ -459,7 +455,8 @@
                             (PHP) · Cart · Support · Our Story</span></div>
                     <div class="proj-links">
                         <a href="projects/Velvet/Velvet.html" target="_blank" class="proj-link">View Live →</a>
-                        <a href="https://github.com/aashdev" target="_blank" class="proj-link-ghost">GitHub ↗</a>
+                        <a href="https://github.com/hasidhnihmathullah" target="_blank" class="proj-link-ghost">GitHub
+                            ↗</a>
                     </div>
                 </div>
             </div>
@@ -492,7 +489,8 @@
                             Hours · Contact · Smooth scroll animations</span></div>
                     <div class="proj-links">
                         <a href="projects/coffee-shop/index.html" target="_blank" class="proj-link">View Live →</a>
-                        <a href="https://github.com/aashdev" target="_blank" class="proj-link-ghost">GitHub ↗</a>
+                        <a href="https://github.com/hasidhnihmathullah" target="_blank" class="proj-link-ghost">GitHub
+                            ↗</a>
                     </div>
                 </div>
             </div>
@@ -501,21 +499,35 @@
             <div class="proj-card reveal">
                 <div class="proj-img p-fw">
                     <img src="images/flyways-screen2.png" alt="FlywaYs" onerror="this.style.display='none'" />
-                    <div class="proj-overlay"><button class="proj-view-btn" onclick="openFlyways()">View Case Study
-                            →</button></div>
+                    <div class="proj-overlay">
+                        <button class="proj-view-btn" onclick="openFlyways()">View Case Study →</button>
+                    </div>
+
+                    <!-- Top-left badges wrapper -->
                     <div class="proj-badge-wrap">
                         <span class="proj-badge figma">Figma</span>
                         <span class="proj-badge ui">UI/UX</span>
                     </div>
+
+                    <!-- Fallback name & sub container -->
+                    <div class="proj-img-default">
+                        <div class="pid-name">FlywaYs</div>
+                        <div class="pid-sub">Air - Ticket Booking</div>
+                    </div>
                 </div>
+
                 <div class="proj-body">
-                    <div class="proj-tags"><span class="tag-figma">Figma</span><span>UI/UX</span><span>Mobile
-                            App</span><span>8 Screens</span></div>
+                    <div class="proj-tags">
+                        <span class="tag-figma">Figma</span><span>UI/UX</span><span>Mobile App</span><span>8
+                            Screens</span>
+                    </div>
                     <h3>FlywaYs — Airline Booking App UI</h3>
                     <p>Complete airline ticket booking UI designed in Figma. 8 screens: splash, search, results,
                         overview, passenger form, payment and login.</p>
-                    <div class="proj-client-note"><span class="client-icon">✈️</span><span>8 screens · 5 user flows ·
-                            Full prototype in Figma</span></div>
+                    <div class="proj-client-note">
+                        <span class="client-icon">✈️</span>
+                        <span>8 screens · 5 user flows · Full prototype in Figma</span>
+                    </div>
                     <div class="proj-links">
                         <button class="proj-link btn-case" onclick="openFlyways()">Case Study →</button>
                         <span class="proj-link-ghost">Figma ↗</span>
@@ -555,11 +567,49 @@
                             aashid-dev database</span></div>
                     <div class="proj-links">
                         <a href="#hero" class="proj-link">View Live →</a>
-                        <a href="https://github.com/aashdev" target="_blank" class="proj-link-ghost">GitHub ↗</a>
+                        <a href="https://github.com/hasidhnihmathullah" target="_blank" class="proj-link-ghost">GitHub
+                            ↗</a>
                     </div>
                 </div>
             </div>
+            <!-- PROJECT: ETCP Tourism App -->
+            <div class="proj-card reveal">
+                <div class="proj-img">
+                    <!-- This loads your green splash screen screenshot as the cover photo -->
+                    <img src="projects/Tourism/Screenshot%202026-08-30%20213429.png" alt="ETCP Tourism App"
+                        onerror="this.style.display='none'" />
 
+                    <div class="proj-overlay">
+                        <a href="https://www.figma.com/design/JgcBVIiXkyiVAdIXuLaKqI/ETCP-Toursim?node-id=0-1&t=zb9NyRRHSoAnpTSc-1"
+                            target="_blank" class="proj-view-btn">View Figma →</a>
+                    </div>
+
+                    <div class="proj-badge-wrap">
+                        <span class="proj-badge figma" style="background-color: #0acf83; color: black;">Figma</span>
+                        <span class="proj-badge ui" style="background-color: #a259ff; color: white;">UI/UX</span>
+                    </div>
+
+                    <div class="proj-img-default" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+                        <div class="pid-name">ETCP Tourism</div>
+                        <div class="pid-sub">Mobile App UI</div>
+                    </div>
+                </div>
+
+                <div class="proj-body">
+                    <div class="proj-tags">
+                        <span>Figma</span><span>UI/UX</span><span>Mobile App</span>
+                    </div>
+
+                    <h3>ETCP Tourism — App Design</h3>
+                    <p>A mobile application UI/UX design connecting travelers with nature trails, local eco-resorts, and
+                        hiking schedules. Complete with maps and payment flows.</p>
+
+                    <div class="proj-links">
+                        <a href="https://www.figma.com/design/JgcBVIiXkyiVAdIXuLaKqI/ETCP-Toursim?node-id=0-1&t=zb9NyRRHSoAnpTSc-1"
+                            target="_blank" class="proj-link">Interactive Figma ↗</a>
+                    </div>
+                </div>
+            </div>
             <!-- PROJECT 6: Ferro & Vance Construction -->
             <div class="proj-card reveal delay-2">
                 <div class="proj-img p-ferro">
@@ -582,13 +632,14 @@
                     </div>
                     <h3>Ferro &amp; Vance — Construction Company</h3>
                     <p>A website built for a general contracting company handling renovations, additions, and new
-                        builds[cite: 2]. Features include a process breakdown, services grid, and an interactive quote
-                        request form[cite: 2].</p>
+                        builds. Features include a process breakdown, services grid, and an interactive quote
+                        request form.</p>
                     <div class="proj-client-note"><span class="client-icon">🏗️</span><span>General contractor site with
-                            WhatsApp integration[cite: 2].</span></div>
+                            WhatsApp integration.</span></div>
                     <div class="proj-links">
                         <a href="projects/ferro-vance/index.html" target="_blank" class="proj-link">View Live →</a>
-                        <a href="https://github.com/aashdev" target="_blank" class="proj-link-ghost">GitHub ↗</a>
+                        <a href="https://github.com/hasidhnihmathullah" target="_blank" class="proj-link-ghost">GitHub
+                            ↗</a>
                     </div>
                 </div>
             </div>
@@ -711,12 +762,12 @@
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                         </svg> LinkedIn</a>
                     <a href="https://fiverr.com/aashidh" target="_blank" class="slink slink-fv">🛒 Fiverr</a>
-                    <a href="https://github.com/aashdev" target="_blank" class="slink slink-gh"><svg width="18"
-                            height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <a href="https://github.com/hasidhnihmathullah" target="_blank" class="slink slink-gh"><svg
+                            width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                         </svg> GitHub</a>
-                    <a href="Hasidh Nihmathullah CV.jpeg" download class="slink slink-cv">📄 Download CV</a>
+                    <a href="Hasidh Nihmathullah CV.jpg" download class="slink slink-cv">📄 Download CV</a>
                 </div>
             </div>
             <form class="contact-form reveal delay-1" id="contactForm">

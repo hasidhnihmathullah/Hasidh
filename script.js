@@ -26,7 +26,7 @@
 })();
 
 // 2. TYPING EFFECT
-const words = ['Developer', 'UI Designer', 'PHP Developer', 'Python Dev', 'Problem Solver', 'Freelancer'];
+const words = ['Junior Developer', 'UI Designer', , 'Problem Solver', 'Freelancer'];
 let wi = 0, ci = 0, del = false;
 function startTyping() {
     const el = document.getElementById('typingText');
